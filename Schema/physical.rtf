@@ -14,15 +14,15 @@ dept_name VARCHAR(30)\
 \
 DepartmentEmployees\
 -\
-emp_no INT FK >-< Employees.emp_no\
-dept_no VARCHAR(4) FK >-< Departments.dept_no\
+emp_no INT FK >- Employees.emp_no\
+dept_no VARCHAR(4) FK >- Departments.dept_no\
 from_date DATE\
 to_date DATE\
 \
 DepartmentManagers\
 -\
-dept_no VARCHAR(4) FK >-< Departments.dept_no\
-emp_no INT FK >-< Employees.emp_no\
+dept_no VARCHAR(4) FK >- Departments.dept_no\
+emp_no INT FK >- Employees.emp_no\
 from_date DATE\
 to_date DATE\
 \
