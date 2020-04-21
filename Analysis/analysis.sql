@@ -31,43 +31,78 @@ order by from_date);
 
 select d.dept_no as "department number",
 d.dept_name as "department name",
+dm.from_date as "reign start date",
+dm.to_date as "reign end date",
 dm.emp_no as "manager employee number",
-dm.from_date as "department start",
-dm.to_date as "department end",
 e.last_name as "last name",
 e.first_name as "first name",
-s.from_date as "start date",
-s.to_date as "end date"
+de.from_date as "employment start date",
+de.to_date as "employment end date"
 from departments as d
 join departmentmanagers as dm
 on dm.dept_no=d.dept_no
 join employees as e
 on e.emp_no = dm.emp_no
-join salaries as s
-on s.emp_no = e.emp_no;
+join departmentemployees as de
+on de.emp_no = dm.emp_no
+order by "department number", "reign start date";
 
-select dept_no, max(from_date) 
-from departmentmanagers
-group by dept_no
-order by dept_no
-
-select dept_no as dept_no, dept_name
-from departments
 
 -- 4. List the department of each employee with the following information:
 -- employee number, last name, first name, and department name.
 
+select e.emp_no as "employee number",
+e.first_name as "first name",
+e.last_name as "last name",
+d.dept_name as "department name"
+from employees as e
+join departmentemployees as de
+on e.emp_no = de.emp_no
+join departments as d
+on d.dept_no = de.dept_no
+order by e.emp_no;
 
 -- 5. List all employees whose first name is "Hercules" and last names begin with "B."
 
+select * from employees where
+first_name = 'Hercules'
+and last_name like 'B%';
 
 -- 6. List all employees in the Sales department, including their
 -- employee number, last name, first name, and department name.
 
+select e.emp_no as "employee number",
+e.first_name as "first name",
+e.last_name as "last name",
+d.dept_name as "department name"
+from employees as e
+join departmentemployees as de
+on e.emp_no = de.emp_no
+join departments as d
+on d.dept_no = de.dept_no
+where d.dept_name ='Sales'
+order by e.emp_no;
 
 -- 7. List all employees in the Sales and Development departments, including their
 -- employee number, last name, first name, and department name.
 
+select e.emp_no as "employee number",
+e.first_name as "first name",
+e.last_name as "last name",
+d.dept_name as "department name"
+from employees as e
+join departmentemployees as de
+on e.emp_no = de.emp_no
+join departments as d
+on d.dept_no = de.dept_no
+where d.dept_name  in ('Sales','Development')
+order by d.dept_name desc, e.emp_no;
+
 
 -- 8. In descending order, list the frequency count of employee last names,
 -- i.e., how many employees share each last name.
+
+select last_name as "last name", count(emp_no) as "frequency"
+from employees
+group by "last name"
+order by "frequency" desc;
